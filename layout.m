@@ -82,22 +82,13 @@ pathfile= strcat(pathname,filename);
 handles.image=imread(pathfile);
 axes(handles.axes1);
 imshow(handles.image);
-%grayscale
-handles.imageGrays = mat2gray(handles.image);
-%cropping
-[R,xp] = radon(handles.imageGrays,90);
+%biner
+bw = 1-im2bw(handles.image);
+%horizontal histogram
+h = sum(bw,2)
+%plot
 axes(handles.axes2);
-plot(xp,R);
-X = max(xp);
-Y = max(R);
-fprintf('Max x = %d\n',X);
-fprintf('Max y = %d\n',Y);
-%plotting
-axes(handles.axes3);
-imshow(handles.image);
-hold on
-rectangle('Position',[0 0 1800 3500],'EdgeColor','r')
-
+plot(sum(bw,2),1:size(bw,1))
 
 
 
