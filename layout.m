@@ -22,7 +22,7 @@ function varargout = layout(varargin)
 
 % Edit the above text to modify the response to help layout
 
-% Last Modified by GUIDE v2.5 19-Sep-2016 00:35:46
+% Last Modified by GUIDE v2.5 30-Sep-2016 00:31:19
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -76,20 +76,50 @@ varargout{1} = handles.output;
 
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
+%load cases
+folder_name = uigetdir('D:\DDSM\benign\benign_01','Select Case');
+disp(folder_name)
+length(folder_name)
+%get id
+id = folder_name(30:33);
+set(handles.text7, 'String', id)
+
+
 %load gambar tif
-[filename, pathname] = uigetfile('*.tif', 'Select image','D:\DDSM');
-pathfile= strcat(pathname,filename);
-handles.image=imread(pathfile);
-axes(handles.axes1);
-imshow(handles.image);
+%[filename, pathname] = uigetfile('*.tif', 'Select image','D:\DDSM');
+%pathfile= strcat(pathname,filename);
+%handles.image=imread(pathfile);
+%axes(handles.axes1);
+%imshow(handles.image);
 %biner
-bw = 1-im2bw(handles.image);
 %horizontal histogram
-h = sum(bw,2)
+%level = graythresh(handles.image);  %# Compute an appropriate threshold 
+%bw = 1-im2bw(handles.image,level);  
 %plot
-axes(handles.axes2);
-plot(sum(bw,2),1:size(bw,1))
+%axes(handles.axes2);
+%imshow(handles.image)
+%hold on
+%plot(sum(bw,2),1:size(bw,1))
 
 
+% --- Executes during object deletion, before destroying properties.
+function axes1_DeleteFcn(hObject, eventdata, handles)
+% hObject    handle to axes1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
 
+% --- Executes during object creation, after setting all properties.
+function axes1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to axes1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: place code in OpeningFcn to populate axes1
+
+
+% --- Executes on button press in pushbutton2.
+function pushbutton2_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
