@@ -79,18 +79,56 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 %load cases
 folder_name = uigetdir('D:\DDSM\benign\benign_01','Select Case');
 disp(folder_name)
-length(folder_name)
 %get id
 id = folder_name(30:33);
 set(handles.text7, 'String', id)
+%set name of .ics file
+name_ics=strcat('\C-',id,'-1.ics');
+disp(name_ics)
+%set name of CC LEFT image file
+name_cc_left_image=strcat('\C_',id,'_1.LEFT_CC.LJPEG.1.image.tif');
+disp(name_cc_left_image)
+%set name of CC RIGHT image file
+name_cc_right_image=strcat('\C_',id,'_1.RIGHT_CC.LJPEG.1.image.tif');
+disp(name_cc_right_image)
+% set name of MLO LEFT image file
+name_mlo_left_image=strcat('\C_',id,'_1.LEFT_MLO.LJPEG.1.image.tif');
+disp(name_mlo_left_image)
+% set name of MLO RIGHT image file
+name_mlo_right_image=strcat('\C_',id,'_1.RIGHT_MLO.LJPEG.1.image.tif');
+disp(name_mlo_right_image)
+% set name of CC LEFT OVERLAY
+name_cc_left_overlay=strcat('\C_',id,'_1.LEFT_CC.OVERLAY');
+disp(name_cc_left_overlay)
+% set name of CC RIGHT OVERLAY
+name_cc_right_overlay=strcat('\C_',id,'_1.RIGHT_CC.OVERLAY');
+disp(name_cc_right_overlay)
+% set name of MLO LEFT OVERLAY
+name_mlo_left_overlay=strcat('\C_',id,'_1.LEFT_MLO.OVERLAY');
+disp(name_mlo_left_overlay)
+% set name of MLO RIGHT OVERLAY
+name_mlo_right_overlay=strcat('\C_',id,'_1.RIGHT_MLO.OVERLAY');
+disp(name_mlo_right_overlay)
+
+%show all mammogram from filepath
+handles.cc_left_image=imread(strcat(folder_name,name_cc_left_image));
+handles.cc_left_image=flip(handles.cc_left_image,2);
+axes(handles.axes1);
+imshow(handles.cc_left_image);
+handles.cc_right_image=imread(strcat(folder_name,name_cc_right_image));
+handles.cc_right_image=flip(handles.cc_right_image,2);
+axes(handles.axes2);
+imshow(handles.cc_right_image);
+handles.mlo_left_image=imread(strcat(folder_name,name_mlo_left_image));
+handles.mlo_left_image=flip(handles.mlo_left_image,2);
+axes(handles.axes3);
+imshow(handles.mlo_left_image);
+handles.mlo_right_image=imread(strcat(folder_name,name_mlo_right_image));
+handles.mlo_right_image=flip(handles.mlo_right_image,2);
+axes(handles.axes4);
+imshow(handles.mlo_right_image);
 
 
-%load gambar tif
-%[filename, pathname] = uigetfile('*.tif', 'Select image','D:\DDSM');
-%pathfile= strcat(pathname,filename);
-%handles.image=imread(pathfile);
-%axes(handles.axes1);
-%imshow(handles.image);
 %biner
 %horizontal histogram
 %level = graythresh(handles.image);  %# Compute an appropriate threshold 
