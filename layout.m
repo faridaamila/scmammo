@@ -22,7 +22,7 @@ function varargout = layout(varargin)
 
 % Edit the above text to modify the response to help layout
 
-% Last Modified by GUIDE v2.5 30-Sep-2016 00:31:19
+% Last Modified by GUIDE v2.5 30-Sep-2016 01:53:14
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -82,33 +82,50 @@ disp(folder_name)
 %get id
 id = folder_name(30:33);
 set(handles.text7, 'String', id)
-%set name of .ics file
-name_ics=strcat('\C-',id,'-1.ics');
-disp(name_ics)
+xid = str2num(id)
+%menentukan case b / c nya 
+if xid>3000
+    %set name of .ics file
+    name_ics=strcat('\B-',id,'-1.ics');
+    disp(name_ics)
+else 
+    %set name of .ics file
+    name_ics=strcat('\C-',id,'-1.ics');
+    disp(name_ics)
+end
+%reading ics file to get age and date digitized
+path_ics=strcat(folder_name,name_ics)
+fileID = fopen(path_ics);
+disp(fileID)
+C = textscan(fileID,'%s %s %s %s %s %s %s %s %s %s');
+fclose(fileID);
+celldisp(C)
+%set age
+set(handles.text8, 'String', C{2}{4})
+%set date digitized
+date=strcat(C{2}{8},'/',C{3}{8},'/',C{4}{8})
+set(handles.text6, 'String', date)
+%set open file mammogram
+%case b or c
+if xid>3000
+    name_mammo=strcat( '\B_',id,'_1.');
+    disp(name_mammo)
+else 
+    name_mammo=strcat('\C_',id,'_1.');
+    disp(name_mammo)
+end
 %set name of CC LEFT image file
-name_cc_left_image=strcat('\C_',id,'_1.LEFT_CC.LJPEG.1.image.tif');
+name_cc_left_image=strcat(name_mammo,'LEFT_CC.LJPEG.1.image.tif');
 disp(name_cc_left_image)
 %set name of CC RIGHT image file
-name_cc_right_image=strcat('\C_',id,'_1.RIGHT_CC.LJPEG.1.image.tif');
+name_cc_right_image=strcat(name_mammo,'RIGHT_CC.LJPEG.1.image.tif');
 disp(name_cc_right_image)
 % set name of MLO LEFT image file
-name_mlo_left_image=strcat('\C_',id,'_1.LEFT_MLO.LJPEG.1.image.tif');
+name_mlo_left_image=strcat(name_mammo,'LEFT_MLO.LJPEG.1.image.tif');
 disp(name_mlo_left_image)
 % set name of MLO RIGHT image file
-name_mlo_right_image=strcat('\C_',id,'_1.RIGHT_MLO.LJPEG.1.image.tif');
+name_mlo_right_image=strcat(name_mammo,'RIGHT_MLO.LJPEG.1.image.tif');
 disp(name_mlo_right_image)
-% set name of CC LEFT OVERLAY
-name_cc_left_overlay=strcat('\C_',id,'_1.LEFT_CC.OVERLAY');
-disp(name_cc_left_overlay)
-% set name of CC RIGHT OVERLAY
-name_cc_right_overlay=strcat('\C_',id,'_1.RIGHT_CC.OVERLAY');
-disp(name_cc_right_overlay)
-% set name of MLO LEFT OVERLAY
-name_mlo_left_overlay=strcat('\C_',id,'_1.LEFT_MLO.OVERLAY');
-disp(name_mlo_left_overlay)
-% set name of MLO RIGHT OVERLAY
-name_mlo_right_overlay=strcat('\C_',id,'_1.RIGHT_MLO.OVERLAY');
-disp(name_mlo_right_overlay)
 
 %show all mammogram from filepath
 handles.cc_left_image=imread(strcat(folder_name,name_cc_left_image));
@@ -161,3 +178,26 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+
+function edit1_Callback(hObject, eventdata, handles)
+% hObject    handle to edit1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit1 as text
+%        str2double(get(hObject,'String')) returns contents of edit1 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
