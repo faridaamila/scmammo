@@ -22,7 +22,7 @@ function varargout = layout(varargin)
 
 % Edit the above text to modify the response to help layout
 
-% Last Modified by GUIDE v2.5 30-Sep-2016 01:53:14
+% Last Modified by GUIDE v2.5 14-Oct-2016 03:29:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -61,6 +61,8 @@ guidata(hObject, handles);
 
 % UIWAIT makes layout wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
+setappdata(0,'LayoutMain', gcf);
+
 
 
 % --- Outputs from this function are returned to the command line.
@@ -79,6 +81,8 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 %load cases
 folder_name = uigetdir('D:\DDSM\benign\benign_01','Select Case');
 disp(folder_name)
+h = waitbar(0,'Please Wait....');
+
 %get id
 id = folder_name(30:33);
 set(handles.text7, 'String', id)
@@ -93,6 +97,9 @@ else
     name_ics=strcat('\C-',id,'-1.ics');
     disp(name_ics)
 end
+perc = 25;
+waitbar(perc/100,h,sprintf('%d%% Please wait...',perc))
+
 %reading ics file to get age and date digitized
 path_ics=strcat(folder_name,name_ics)
 fileID = fopen(path_ics);
@@ -114,48 +121,52 @@ else
     name_mammo=strcat('\C_',id,'_1.');
     disp(name_mammo)
 end
+perc = 50;
+waitbar(perc/100,h,sprintf('%d%% Please wait...',perc))
+
 %set name of CC LEFT image file
 name_cc_left_image=strcat(name_mammo,'LEFT_CC.LJPEG.1.image.tif');
+name_cc_left_image=strcat(folder_name,name_cc_left_image);
 disp(name_cc_left_image)
 %set name of CC RIGHT image file
 name_cc_right_image=strcat(name_mammo,'RIGHT_CC.LJPEG.1.image.tif');
+name_cc_right_image=strcat(folder_name,name_cc_right_image);
 disp(name_cc_right_image)
 % set name of MLO LEFT image file
 name_mlo_left_image=strcat(name_mammo,'LEFT_MLO.LJPEG.1.image.tif');
+name_mlo_left_image=strcat(folder_name,name_mlo_left_image);
 disp(name_mlo_left_image)
 % set name of MLO RIGHT image file
 name_mlo_right_image=strcat(name_mammo,'RIGHT_MLO.LJPEG.1.image.tif');
+name_mlo_right_image=strcat(folder_name,name_mlo_right_image);
 disp(name_mlo_right_image)
+perc = 75;
+waitbar(perc/100,h,sprintf('%d%% Please wait...',perc))
 
 %show all mammogram from filepath
-handles.cc_left_image=imread(strcat(folder_name,name_cc_left_image));
-handles.cc_left_image=flip(handles.cc_left_image,2);
+cc_left_image=imread(name_cc_left_image);
+cc_left_image=flip(cc_left_image,2);
+setappdata(gcf,   'cc_left_image'    , cc_left_image);
 axes(handles.axes1);
-imshow(handles.cc_left_image);
-handles.cc_right_image=imread(strcat(folder_name,name_cc_right_image));
-handles.cc_right_image=flip(handles.cc_right_image,2);
+imshow(cc_left_image);
+cc_right_image=imread(name_cc_right_image);
+cc_right_image=flip(cc_right_image,2);
+setappdata(gcf,   'cc_right_image'    , cc_right_image);
 axes(handles.axes2);
-imshow(handles.cc_right_image);
-handles.mlo_left_image=imread(strcat(folder_name,name_mlo_left_image));
-handles.mlo_left_image=flip(handles.mlo_left_image,2);
+imshow(cc_right_image);
+mlo_left_image=imread(name_mlo_left_image);
+mlo_left_image=flip(mlo_left_image,2);
+setappdata(gcf,   'mlo_left_image'    , mlo_left_image);
 axes(handles.axes3);
-imshow(handles.mlo_left_image);
-handles.mlo_right_image=imread(strcat(folder_name,name_mlo_right_image));
-handles.mlo_right_image=flip(handles.mlo_right_image,2);
+imshow(mlo_left_image);
+mlo_right_image=imread(name_mlo_right_image);
+mlo_right_image=flip(mlo_right_image,2);
+setappdata(gcf,   'mlo_right_image'    , mlo_right_image);
 axes(handles.axes4);
-imshow(handles.mlo_right_image);
-
-
-%biner
-%horizontal histogram
-%level = graythresh(handles.image);  %# Compute an appropriate threshold 
-%bw = 1-im2bw(handles.image,level);  
-%plot
-%axes(handles.axes2);
-%imshow(handles.image)
-%hold on
-%plot(sum(bw,2),1:size(bw,1))
-
+imshow(mlo_right_image);
+perc = 100;
+waitbar(perc/100,h,sprintf('%d%% Please wait...',perc))
+close(h)
 
 % --- Executes during object deletion, before destroying properties.
 function axes1_DeleteFcn(hObject, eventdata, handles)
@@ -201,3 +212,11 @@ function edit1_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in pushbutton3.
+function pushbutton3_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+layout2;

@@ -1,0 +1,15 @@
+
+% set name of CC LEFT OVERLAY
+name_cc_left_overlay=strcat('\C_',id,'_1.LEFT_CC.OVERLAY');
+disp(name_cc_left_overlay)
+% set name of CC RIGHT OVERLAY
+name_cc_right_overlay=strcat('\C_',id,'_1.RIGHT_CC.OVERLAY');
+disp(name_cc_right_overlay)
+% set name of MLO LEFT OVERLAY
+name_mlo_left_overlay=strcat('\C_',id,'_1.LEFT_MLO.OVERLAY');
+disp(name_mlo_left_overlay)
+% set name of MLO RIGHT OVERLAY
+name_mlo_right_overlay=strcat('\C_',id,'_1.RIGHT_MLO.OVERLAY');
+disp(name_mlo_right_overlay)
+
+

@@ -1,0 +1,34 @@
+%horizontal histogram 
+level = graythresh(cc_left_image);  %# Compute an appropriate threshold 
+bw = 1-im2bw(cc_left_image,level);  
+%plot
+axes(handles.axes5);
+imshow(cc_left_image)
+hold on
+plot(sum(bw,2),1:size(bw,1))
+
+level2 = graythresh(cc_right_image);  %# Compute an appropriate threshold 
+bw2 = im2bw(cc_right_image,level2);  
+%plot
+axes(handles.axes6);
+imshow(cc_right_image)
+hold on
+plot(sum(bw2,2),1:size(bw2,1))
+
+level3 = graythresh(mlo_left_image);  %# Compute an appropriate threshold 
+bw3 = 1-im2bw(mlo_left_image,level3);  
+%plot
+axes(handles.axes7);
+imshow(mlo_left_image)
+hold on
+plot(sum(bw3,2),1:size(bw3,1)) 
+
+level4 = graythresh(mlo_right_image);  %# Compute an appropriate threshold 
+bw4 = im2bw(mlo_right_image,level4);  
+%plot
+axes(handles.axes8);
+imshow(mlo_right_image)
+hold on
+plot(sum(bw4,2),1:size(bw4,1))
+
+%cropping
